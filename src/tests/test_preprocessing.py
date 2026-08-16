@@ -1,27 +1,13 @@
+from pathlib import Path
+
 from ..preprocess.audio_loader import AudioLoader
 from ..preprocess.feature_extractor import FeatureExtractor
 
 
-audio_loader = AudioLoader(
-    target_sample_rate=16000
-)
+def test_preprocessing_pipeline():
+    waveform, sample_rate = AudioLoader().process(Path("asset/voice-sample.wav"))
+    log_mel = FeatureExtractor().process(waveform)
 
-feature_extractor = FeatureExtractor(
-    sample_rate=16000,
-    n_fft=400,
-    win_length=400,
-    hop_length=160,
-    n_mels=80
-)
-
-waveform, sample_rate = audio_loader.process(
-    "asset/voice-sample.wav"
-)
-
-log_mel = feature_extractor.process(
-    waveform
-)
-
-print("Waveform:", waveform.shape)
-print("Sample rate:", sample_rate)
-print("Log-Mel:", log_mel.shape)
+    assert sample_rate == 16_000
+    assert waveform.shape[0] == 1
+    assert log_mel.shape[-1] == 80
