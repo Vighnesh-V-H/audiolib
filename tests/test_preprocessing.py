@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from ..preprocess.audio_loader import AudioLoader
-from ..preprocess.feature_extractor import FeatureExtractor
+from src.preprocess.audio_loader import AudioLoader
+from src.preprocess.feature_extractor import FeatureExtractor
 
 
 def test_preprocessing_pipeline():
